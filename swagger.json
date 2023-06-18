@@ -1,0 +1,311 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Vehicle management api documentation",
+    "version": "1.0.0",
+    "title": "DUFITUMUKIZA Emmanuel"
+  },
+  "host": "localhost:8000/api/v1",
+  "tags": [
+    {
+      "name": "Admin Authentication",
+      "description": "all Apis which are related to admins authentication",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "Car Owners",
+      "description": "all Apis which are related to car owners",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Admin Authentication"],
+        "summary": "Register admin",
+        "description": "Fill out the information bellow to register new admin",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "phoneNumber": {
+                  "type": "string"
+                },
+                "nationalId": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Admin Authentication"],
+        "summary": "Login as admin",
+        "description": "Fill out the information bellow to login as admin",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created successfully!"
+          },
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/carOwners": {
+      "post": {
+        "tags": ["Car Owners"],
+        "summary": "Register a car owner",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ownerName": {
+                  "type": "string"
+                },
+                "nationalID": {
+                  "type": "number"
+                },
+                "phoneNumber": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "bearer token for user authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created successfully!"
+          },
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/carOwners/edit/{carOwnerId}": {
+        "put": {
+          "tags": ["Car Owners"],
+          "summary": "Update existing car owner",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ownerName": {
+                    "type": "string"
+                  },
+                  "nationalID": {
+                    "type": "number"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "in": "header",
+              "name": "Authorization",
+              "description": "bearer token for user authorization",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+                "in": "path",
+                "name": "carOwnerId",
+                "description": "the car owner Id",
+                "required": true
+              }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created successfully!"
+            },
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },
+    "/carOwners/{limit}/{page}": {
+      "get": {
+        "tags": ["Car Owners"],
+        "summary": "Get car owners",
+        "description": "Get all blogs",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "bearer token for user authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "page",
+            "description": "the current page number",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "limit",
+            "description": "the limit item per page number",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/carOwners/{carOwnerId}":{
+        "delete": {
+            "tags": ["Car Owners"],
+            "summary": "Delete a car owner by id",
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "in": "path",
+                "name": "carOwnerId",
+                "description": "the id of the car owner",
+                "required": true
+              },
+                {
+                  "in": "header",
+                  "name": "Authorization",
+                  "description": "bearer token for user authorization",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+            ],
+            "responses": {
+              "200": {
+                "description": "successful operation"
+              },
+              "400": {
+                "description": "bad request"
+              }
+            }
+          }
+    }
+  }
+}
